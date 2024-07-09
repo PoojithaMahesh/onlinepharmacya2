@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.jsp.onlinepharmacya2.dao.AdminDao;
 import com.jsp.onlinepharmacya2.dto.Admin;
 import com.jsp.onlinepharmacya2.exception.AdminIdNotFoundException;
+import com.jsp.onlinepharmacya2.exception.LoginFailureException;
 import com.jsp.onlinepharmacya2.util.ResponseStructure;
 
 @Service
@@ -85,5 +86,35 @@ public class AdminService {
 //			raise the exception
 			throw new AdminIdNotFoundException("Sorry failed to delete the admin details");
 		}
+	}
+
+	public ResponseEntity<ResponseStructure<Admin>> loginAdmin(String email, String password) {
+		Admin dbAdmin=dao.findAdminByEmail(email);
+		if(dbAdmin!=null) {
+//			admin is present
+			
+//			now check your password
+			if(password.equals(dbAdmin.getPassword())) {
+//				it is a valid email LOGIN SUccess
+				
+				ResponseStructure<Admin> structure=new ResponseStructure<>();
+				structure.setMessage("Admin LOGGEDIN Successfully");
+				structure.setHttpStatus(HttpStatus.OK.value());
+				structure.setData(dbAdmin);
+				
+				return new ResponseEntity<ResponseStructure<Admin>>(structure,HttpStatus.OK);
+				
+				
+			}else {
+//				admin password is incorrect
+//				invalid password
+				throw new LoginFailureException("INVALID PASSWORD!!!!!!!!!");
+			}
+		}else {
+//			admin is not present with this email
+//			invalid email
+			throw new LoginFailureException("INVALID EMAILLLLLLL!!!!");
+		}
+	
 	}
 }

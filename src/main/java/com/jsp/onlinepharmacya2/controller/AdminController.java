@@ -40,8 +40,12 @@ public class AdminController {
 		return service.deleteAdminById(adminId);
 	}
 	
-	
-	
+	@PostMapping("/login")
+    public ResponseEntity<ResponseStructure<Admin>> loginAdmin
+    (@RequestParam String email,@RequestParam String password){
+		return service.loginAdmin(email,password);
+		
+	}
 	
 	
 	

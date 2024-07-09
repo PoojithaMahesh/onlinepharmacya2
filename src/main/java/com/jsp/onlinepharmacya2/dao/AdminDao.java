@@ -57,5 +57,17 @@ public class AdminDao {
 			return null;
 		}
 	}
+
+	public Admin findAdminByEmail(String email) {
+		Optional<Admin> optional=repo.findByEmail(email);
+		if(optional.isPresent()) {
+//			that admin is present in this email
+			 
+			return optional.get();
+		}else {
+//			admin is not present
+			return null;
+		}
+	}
 	
 }

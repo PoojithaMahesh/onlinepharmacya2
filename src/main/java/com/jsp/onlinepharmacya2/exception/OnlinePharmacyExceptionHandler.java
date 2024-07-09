@@ -21,4 +21,21 @@ public class OnlinePharmacyExceptionHandler extends ResponseEntityExceptionHandl
 		
 		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
 	}
+	
+	
+	@ExceptionHandler
+	public ResponseEntity<ResponseStructure<String>> handleLoginFailure(LoginFailureException exception){
+		
+		ResponseStructure<String> structure=new ResponseStructure<>();
+		structure.setMessage("SORRY FAILED TO LOGIN");
+		structure.setHttpStatus(HttpStatus.NOT_FOUND.value());
+		structure.setData(exception.getMessage());
+		
+		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+	}
+	
+	
+	
+	
+	
 }
