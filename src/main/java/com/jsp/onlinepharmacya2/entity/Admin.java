@@ -1,4 +1,4 @@
-package com.jsp.onlinepharmacya2.dto;
+package com.jsp.onlinepharmacya2.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.jsp.onlinepharmacya2.dto.Admin;
+import com.jsp.onlinepharmacya2.entity.Admin;
 import com.jsp.onlinepharmacya2.repo.AdminRepo;
 
 @Repository

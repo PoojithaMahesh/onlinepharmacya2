@@ -6,8 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.jsp.onlinepharmacya2.dao.AdminDao;
-import com.jsp.onlinepharmacya2.dto.Admin;
+import com.jsp.onlinepharmacya2.dto.AdminDto;
+import com.jsp.onlinepharmacya2.entity.Admin;
 import com.jsp.onlinepharmacya2.exception.AdminIdNotFoundException;
+import com.jsp.onlinepharmacya2.exception.FailedToResetThePasswordException;
 import com.jsp.onlinepharmacya2.exception.LoginFailureException;
 import com.jsp.onlinepharmacya2.util.ResponseStructure;
 
@@ -17,15 +19,21 @@ public class AdminService {
 	@Autowired
 	private AdminDao dao;
 
-	public ResponseEntity<ResponseStructure<Admin>> signUpAdmin(Admin admin) {
+	public ResponseEntity<ResponseStructure<AdminDto>> signUpAdmin(Admin admin) {
 		Admin dbAdmin=dao.saveAdmin(admin);
 		
-		ResponseStructure<Admin> structure=new ResponseStructure<>();
+		AdminDto adminDto=new AdminDto();
+		adminDto.setAdminId(dbAdmin.getAdminId());
+		adminDto.setAdminName(dbAdmin.getAdminName());
+		adminDto.setAdminEmail(dbAdmin.getAdminEmail());
+		
+		
+		ResponseStructure<AdminDto> structure=new ResponseStructure<>();
 		structure.setMessage("Admin SignedUp Successfully");
 		structure.setHttpStatus(HttpStatus.CREATED.value());
-		structure.setData(dbAdmin);
+		structure.setData(adminDto);
 		
-		return new ResponseEntity<ResponseStructure<Admin>>(structure,HttpStatus.CREATED);
+		return new ResponseEntity<ResponseStructure<AdminDto>>(structure,HttpStatus.CREATED);
 		
 		
 		
@@ -116,5 +124,38 @@ public class AdminService {
 			throw new LoginFailureException("INVALID EMAILLLLLLL!!!!");
 		}
 	
+	}
+
+	public ResponseEntity<ResponseStructure<Admin>> resetPassword(String email, String newpassword, long phone) {
+		Admin dbAdmin=dao.findAdminByEmail(email);
+		if(dbAdmin!=null) {
+//			admin is present with this email
+			
+			if(dbAdmin.getPhoneNumber()==phone) {
+//				yes its the exact admin
+				
+//				we can update the password
+				dbAdmin.setPassword(newpassword);
+				Admin updatedAdminDetails=dao.updateAdmin(dbAdmin.getAdminId(), dbAdmin);
+				ResponseStructure<Admin> structure=new ResponseStructure<>();
+				structure.setMessage("Admin Password resets Successfully");
+				structure.setHttpStatus(HttpStatus.OK.value());
+				structure.setData(updatedAdminDetails);
+				
+				return new ResponseEntity<ResponseStructure<Admin>>(structure,HttpStatus.OK);
+			}else {
+				
+				throw new FailedToResetThePasswordException("INVALID PHONENUMBER");
+			}
+		}else {
+//			admin email is not present
+			throw new FailedToResetThePasswordException("INVALID EMAIL");
+		}
+		
+		
+		
+		
+		
+		
 	}
 }

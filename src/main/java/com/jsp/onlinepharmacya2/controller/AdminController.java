@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jsp.onlinepharmacya2.dto.Admin;
+import com.jsp.onlinepharmacya2.dto.AdminDto;
+import com.jsp.onlinepharmacya2.entity.Admin;
 import com.jsp.onlinepharmacya2.service.AdminService;
 import com.jsp.onlinepharmacya2.util.ResponseStructure;
 
@@ -21,7 +22,7 @@ public class AdminController {
 	private AdminService service;
 
 	@PostMapping("/save")
-	public ResponseEntity<ResponseStructure<Admin>> signupAdmin(@RequestBody Admin admin) {
+	public ResponseEntity<ResponseStructure<AdminDto>> signupAdmin(@RequestBody Admin admin) {
 		return service.signUpAdmin(admin);
 	}
 	
@@ -47,7 +48,12 @@ public class AdminController {
 		
 	}
 	
+	@PostMapping("/resetpassword")
 	
+	public ResponseEntity<ResponseStructure<Admin>> resetPassword(@RequestParam String email,
+			@RequestParam String newpassword,@RequestParam long phone){
+		return service.resetPassword(email,newpassword,phone);
+	}
 	
 	
 	
