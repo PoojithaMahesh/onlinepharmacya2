@@ -3,6 +3,8 @@ package com.jsp.onlinepharmacya2.entity;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.jsp.onlinepharmacya2.enums.BookingStatus;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +25,7 @@ public class Booking {
 	private int quantity;
 	private String paymentMode;
 	private LocalDate expectedDate;
+	private BookingStatus bookingStatus;
 	
 	@ManyToMany
 	private List<Medicines> medicines;

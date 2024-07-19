@@ -22,6 +22,47 @@ public class OnlinePharmacyExceptionHandler extends ResponseEntityExceptionHandl
 		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
 	}
 	@ExceptionHandler
+	public ResponseEntity<ResponseStructure<String>> handleBookingalreadycancelledexception(BookingAlreadyCancelledException exception){
+		
+		ResponseStructure<String> structure=new ResponseStructure<>();
+		structure.setMessage("Booking Already Cancelled");
+		structure.setHttpStatus(HttpStatus.NOT_FOUND.value());
+		structure.setData(exception.getMessage());
+		
+		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+	}
+	@ExceptionHandler
+	public ResponseEntity<ResponseStructure<String>> handleBookingalreadydelieveredexception(BookingAlreadyDeliveredException exception){
+		
+		ResponseStructure<String> structure=new ResponseStructure<>();
+		structure.setMessage("Booking Already Delivered");
+		structure.setHttpStatus(HttpStatus.NOT_FOUND.value());
+		structure.setData(exception.getMessage());
+		
+		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+	}
+	@ExceptionHandler
+	public ResponseEntity<ResponseStructure<String>> handlecantcancelDateexception(CantCancelledException exception){
+		
+		ResponseStructure<String> structure=new ResponseStructure<>();
+		structure.setMessage("ITS A TIME");
+		structure.setHttpStatus(HttpStatus.NOT_FOUND.value());
+		structure.setData(exception.getMessage());
+		
+		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler
+	public ResponseEntity<ResponseStructure<String>> handleCustomerIdNotFoundException(CustomerIdNotFoundException exception){
+		
+		ResponseStructure<String> structure=new ResponseStructure<>();
+		structure.setMessage("CUstomer id is not present");
+		structure.setHttpStatus(HttpStatus.NOT_FOUND.value());
+		structure.setData(exception.getMessage());
+		
+		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+	}
+	@ExceptionHandler
 	public ResponseEntity<ResponseStructure<String>> handleMedicineIdNotFoundException(MedicineIdNotFoundException exception){
 		
 		ResponseStructure<String> structure=new ResponseStructure<>();
